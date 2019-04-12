@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>React - Template</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <script src="../../js/react.min.js"></script>
+    <script src="../../js/react-dom.min.js"></script>
+    <script src="../../js/browser.min.js"></script>
+</head>
+<body>
+
+<div id="container"></div>
+
+<script type="text/babel">
+
+    var Comment = React.createClass({
+
+        getInitialState(){
+            return({editing: false});
+        },
+
+        edit(){
+            this.setState({editing: true});
+        },
+
+        remove(){
+            alert('removing');
+        },
+
+        save(){
+            var val = this.refs.newText.value;
+            console.log('new connect: ' + val);
+            this.setState({editing: false});
+        },
+
+        renderNormal(){
+            return (
+                <div className="commentContainer">
+                    <div className="commentText">{this.props.children}</div>
+                    <button onClick={this.edit} className="button-primary">Edit</button>
+                    <button onClick={this.remove} className="button-danger">Remove</button>
+                </div>
+            );
+        },
+
+        renderForm(){
+            return (
+                <div className="commentContainer">
+                    <textarea ref="newText" defaultValue={this.props.children}></textarea>
+                    <button onClick={this.save} className="button-success">Save</button>
+                </div>
+            );
+        },
+
+        render: function () {
+
+            if(this.state.editing){
+                return this.renderForm();
+            }else{
+                return this.renderNormal();
+            }
+
+        }
+
+    });
+    ReactDOM.render(
+        <div className="board">
+            <Comment>Hey KOKA!</Comment>
+            <br/>
+            <Comment>try one :P</Comment>
+            <br/>
+            <Comment>Can't get it huh! ;)</Comment>
+        </div>
+        , document.getElementById('container'));
+</script>
+
+</body>
+</html>
